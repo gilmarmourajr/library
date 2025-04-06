@@ -9,7 +9,7 @@
 <body>
     <section id="header">
         <h1>LIBRARY</h1>
-        <button class="btn">Add new book</button>
+        <button class="btn" id="addBtn">Add new book</button>
     </section>
     <section id="body">
         <h2>My books</h2>
@@ -22,6 +22,31 @@
             <h1>No books added!</h1>
         </div>
     </section>
+    <dialog open>
+        <p>New book</p>
+        <button id="closeDialog" type="button">X</button>
+        <form action="">
+            <div class="form-row">
+                <label for="title">Book title</label>
+                <input id="title" name="title" type="text" placeholder="The Hobbit">
+            </div>
+            <div class="form-row">
+                <label for="author">Author</label>
+                <input id="author" name="author" type="text" placeholder="J.R.R. Tolkien">
+            </div>
+            <div class="form-row">
+                <label for="pages">Number of pages</label>
+                <input id="pages" name="pages" type="number" min="1" value="1">
+            </div>
+            <fieldset class="form-row">
+                <label class="checkbox-label" for="read">
+                    <span>Read?</span>
+                    <input id="read" name="read" value="read" type="checkbox">
+                </label>
+            </fieldset>
+            <button class="btn" id="submitBook" type="submit">Add new book</button>
+        </form>
+    </dialog>
     <script src="./script.js"></script>
 </body>
 </html>

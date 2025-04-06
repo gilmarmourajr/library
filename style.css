@@ -1,119 +1,245 @@
 :root {
-    --background-color-main: black;
-    --background-color-body: rgb(26, 26, 26);
-    --background-color-secondary: blueviolet;
-    --text-color-title: blueviolet;
-    --text-color-main: white;
+  --background-color-main: black;
+  --background-color-body: rgb(26, 26, 26);
+  --background-color-secondary: blueviolet;
+  --text-color-title: blueviolet;
+  --text-color-main: white;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 #header {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 
-    height: 12vh;
-    text-align: center;
-    padding: 1em 10%;
-    font-size: 2em;
-    background-color:var(--background-color-main);
-    color: var(--text-color-title);
-    
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  height: 12vh;
+  text-align: center;
+  padding: 1em 10%;
+  font-size: 2em;
+  background-color: var(--background-color-main);
+  color: var(--text-color-title);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #header .btn {
-    color: var(--text-color-main);
-    background-color: var(--background-color-secondary);
-    padding: 25px 20px;
+  color: var(--text-color-main);
+  background-color: var(--background-color-secondary);
+  padding: 25px 20px;
 }
 
 .btn {
-    border: none;
-    font-size: 0.5em;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: 0.1s;
+  border: none;
+  font-size: 0.5em;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.1s;
+  cursor: pointer;
 }
 
 .btn:hover {
-    scale: 1.1;
+  scale: 1.1;
 }
 
 #body {
-    padding: 2em 10% 1em;
-    min-height: 88vh;
-    background-color: var(--background-color-body);
-    color: var(--text-color-main);
+  padding: 2em 10% 1em;
+  min-height: 88vh;
+  background-color: var(--background-color-body);
+  color: var(--text-color-main);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
 #body h2 {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 #statistics {
-    display: flex;
-    gap: 30px;
+  display: flex;
+  gap: 30px;
 }
 
 #statistics h3 {
-    display: inline-block;
-    padding: 25px 20px;
-    background-color: var(--background-color-secondary);
-    border-radius: 10px;
+  display: inline-block;
+  padding: 25px 20px;
+  background-color: var(--background-color-secondary);
+  border-radius: 10px;
 }
 
 #books {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+#books h1 {
+  margin-top: 100px;
+  font-size: 2.4em;
 }
 
 .book {
-    min-height: 300px;
-    width: 18%;
-    padding: 30px;
-    font-size: 1.5em;
-    background-color: var(--background-color-secondary);
-    border-radius: 10px;
+  min-height: 300px;
+  width: 18%;
+  padding: 30px;
+  font-size: 1.5em;
+  background-color: var(--background-color-secondary);
+  border-radius: 10px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .btns {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 10px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 10px;
 }
 
 .btns .btn {
-    display: inline-block;
-    height: 40px;
-    width: 47%;
-    font-size: 0.8em;
+  display: inline-block;
+  height: 40px;
+  width: 47%;
+  font-size: 0.8em;
 }
 
 .btns .btn.status {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
+}
+
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: 50%;
+  width: 30%;
+  padding: 40px;
+
+  background-color: var(--background-color-main);
+  opacity: 0.98;
+  color: var(--text-color-main);
+  border: none;
+  border-radius: 30px;
+  text-align: center;
+
+  transition: opacity 0.15s ease-in, background-color 0.15s ease-in,
+    display 0.15s ease-in;
+  transition-behavior: allow-discrete;
+}
+
+@starting-style {
+  dialog {
+    opacity: 0;
+    background-color: black;
+  }
+}
+
+/* The style when closed */
+dialog:not([open]) {
+  opacity: 0;
+  background-color: black;
+}
+
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition: display 0.15s allow-discrete, overlay 0.15s allow-discrete,
+    background-color 0.15s;
+}
+
+dialog:open::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}
+
+@starting-style {
+  dialog:open::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+  }
+}
+
+#closeDialog {
+  color: var(--text-color-main);
+  font-weight: 1000;
+  background: none;
+  border: none;
+  font-size: 2.5em;
+
+  position: absolute;
+  top: 10px;
+  right: 30px;
+
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+#closeDialog:hover {
+  color: red;
+}
+
+dialog p {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.form-row input[type="text"] {
+  width: 250px;
+  height: 30px;
+}
+
+.form-row input[type="number"] {
+  width: 70px;
+  height: 30px;
+}
+
+.form-row label {
+  text-align: right;
+  width: 120px;
+  margin-top: 7px;
+  padding-right: 20px;
+}
+
+.form-row input[type="checkbox"] {
+  cursor: pointer;
+}
+
+fieldset {
+  border: none;
+}
+
+.checkbox-label span {
+  margin-right: 10px;
+}
+
+#submitBook {
+  padding: 20px 50px;
+  font-size: 1.4em;
+  background-color: var(--background-color-secondary);
+  color: var(--text-color-main);
+  font-weight: 600;
 }

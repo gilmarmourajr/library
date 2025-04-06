@@ -51,6 +51,17 @@ function clearDisplay() {
 
 const bookArray = [];
 const bookDiv = document.getElementById("books");
+const dialog = document.querySelector("dialog");
+const openDialog = document.getElementById("addBtn");
+const closeDialog = document.getElementById("closeDialog")
+
+openDialog.addEventListener("click", () => {
+    dialog.showModal();
+})
+
+closeDialog.addEventListener("click", () => {
+    dialog.close();
+})
 // addBookToLibrary("Hobbit", "Tolkien", "295");
 // addBookToLibrary("Bible", "God", "A lot");
 // addBooksToDisplay();
