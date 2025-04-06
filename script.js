@@ -73,6 +73,8 @@ function updateStatus() {
 
 function removeElement(event) {
   const button = event.currentTarget;
+
+  //locate book to be removed by its id
   let removeId = event.target.parentNode.parentNode.dataset.id;
   for (book in bookArray) {
     if (bookArray[book].id == removeId) {
@@ -84,10 +86,12 @@ function removeElement(event) {
       }
 
       bookArray.splice(book, 1);
-
       updateStatus();
+      break;
     }
   }
+
+  //remove book element
   button.parentNode.parentNode.remove();
 
   // add placeholder if display is left empty
@@ -114,6 +118,7 @@ let unreadCount = 0;
 submitBook.addEventListener("click", (event) => {
   event.preventDefault();
 
+  //prevent form send if it has errors
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
