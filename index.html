@@ -25,18 +25,18 @@
     <dialog open>
         <p>New book</p>
         <button id="closeDialog" type="button">X</button>
-        <form action="">
+        <form action="" method="post">
             <div class="form-row">
                 <label for="title">Book title</label>
-                <input id="title" name="title" type="text" placeholder="The Hobbit">
+                <input id="title" name="title" type="text" placeholder="The Hobbit" required>
             </div>
             <div class="form-row">
                 <label for="author">Author</label>
-                <input id="author" name="author" type="text" placeholder="J.R.R. Tolkien">
+                <input id="author" name="author" type="text" placeholder="J.R.R. Tolkien" required>
             </div>
             <div class="form-row">
                 <label for="pages">Number of pages</label>
-                <input id="pages" name="pages" type="number" min="1" value="1">
+                <input id="pages" name="pages" type="number" min="1" value="1" required>
             </div>
             <fieldset class="form-row">
                 <label class="checkbox-label" for="read">

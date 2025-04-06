@@ -7,7 +7,7 @@ function Book(title, author, pages) {
 }
 
 function addBookToLibrary(title, author, pages) {
-    book = new Book(title, author, pages);
+    let book = new Book(title, author, pages);
     bookArray.push(book);
 }
 
@@ -53,7 +53,19 @@ const bookArray = [];
 const bookDiv = document.getElementById("books");
 const dialog = document.querySelector("dialog");
 const openDialog = document.getElementById("addBtn");
-const closeDialog = document.getElementById("closeDialog")
+const closeDialog = document.getElementById("closeDialog");
+const submitBook = document.getElementById("submitBook");
+
+submitBook.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const pages = document.getElementById("pages").value;
+
+    addBookToLibrary(title, author, pages);
+    addBooksToDisplay();
+})
 
 openDialog.addEventListener("click", () => {
     dialog.showModal();
