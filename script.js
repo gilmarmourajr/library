@@ -6,8 +6,11 @@ function Book(title, author, pages) {
     this.read  = false;
 }
 
-function addBookToLibrary(title, author, pages) {
+function addBookToLibrary(title, author, pages, read) {
     let book = new Book(title, author, pages);
+    if(read) {
+        book.read = true;
+    }
     bookArray.push(book);
 }
 
@@ -31,7 +34,11 @@ function addBooksToDisplay() {
         btnDiv.classList.add("btns");
         const statusBtn = document.createElement("button");
         statusBtn.classList.add("btn", "status");
-        statusBtn.textContent = "Not read";
+        if(book.read) {
+            statusBtn.textContent = "Read";
+        } else {
+            statusBtn.textContent = "Not read";
+        }
         const editBtn = document.createElement("button");
         editBtn.classList.add("btn");
         editBtn.textContent = "Edit";
@@ -63,7 +70,13 @@ submitBook.addEventListener("click", (event) => {
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
 
-    addBookToLibrary(title, author, pages);
+    let read = false;
+    if(document.getElementById("readCheck").checked) {
+        read = true;
+        console.log("a")
+    }
+
+    addBookToLibrary(title, author, pages, read);
     addBooksToDisplay();
 })
 
@@ -74,6 +87,6 @@ openDialog.addEventListener("click", () => {
 closeDialog.addEventListener("click", () => {
     dialog.close();
 })
-// addBookToLibrary("Hobbit", "Tolkien", "295");
+addBookToLibrary("Hobbit", "Tolkien", "295", true);
 // addBookToLibrary("Bible", "God", "A lot");
 // addBooksToDisplay();
