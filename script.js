@@ -10,6 +10,9 @@ function addBookToLibrary(title, author, pages, read) {
     let book = new Book(title, author, pages);
     if(read) {
         book.read = true;
+        readCount++;
+    } else {
+        unreadCount++;
     }
     bookArray.push(book);
 }
@@ -20,6 +23,7 @@ function addBooksToDisplay() {
     for (let book of bookArray) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("book");
+        newDiv.setAttribute("data-id", book.id);
 
         const dataDiv = document.createElement("div");
         const pTitle = document.createElement("p");
@@ -31,6 +35,7 @@ function addBooksToDisplay() {
         dataDiv.append(pTitle, pAuthor, pPages);
 
         const btnDiv = document.createElement("div");
+
         btnDiv.classList.add("btns");
         const statusBtn = document.createElement("button");
         statusBtn.classList.add("btn", "status");
@@ -41,7 +46,7 @@ function addBooksToDisplay() {
         }
 
         const delBtn = document.createElement("button");
-        delBtn.classList.add("btn");
+        delBtn.classList.add("btn", "delete");
         delBtn.textContent = "Delete";
         btnDiv.append(statusBtn, delBtn);
 
@@ -54,6 +59,12 @@ function clearDisplay() {
     bookDiv.textContent = '';
 }
 
+function updateStatus() {
+    document.getElementById("totalBooks").textContent = `Total books: ${bookArray.length}`;
+    document.getElementById("read").textContent = `Read: ${readCount}`
+    document.getElementById("unread").textContent = `Unread: ${unreadCount}`
+}
+
 const bookArray = [];
 const bookDiv = document.getElementById("books");
 const dialog = document.querySelector("dialog");
@@ -61,6 +72,9 @@ const openDialog = document.getElementById("addBtn");
 const closeDialog = document.getElementById("closeDialog");
 const submitBook = document.getElementById("submitBook");
 const form = document.querySelector("form");
+
+let readCount = 0;
+let unreadCount = 0;
 
 submitBook.addEventListener("click", (event) => {
     event.preventDefault();
@@ -82,7 +96,8 @@ submitBook.addEventListener("click", (event) => {
     
     addBookToLibrary(title, author, pages, read);
     addBooksToDisplay();
-    
+    updateStatus();
+
     form.reset();
 })
 
