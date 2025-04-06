@@ -115,13 +115,8 @@
 .btns .btn {
   display: inline-block;
   height: 40px;
-  width: 47%;
-  font-size: 0.8em;
-}
-
-.btns .btn.status {
-  display: inline-block;
   width: 100%;
+  font-size: 0.8em;
 }
 
 dialog {

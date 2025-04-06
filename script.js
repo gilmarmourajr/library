@@ -39,13 +39,11 @@ function addBooksToDisplay() {
         } else {
             statusBtn.textContent = "Not read";
         }
-        const editBtn = document.createElement("button");
-        editBtn.classList.add("btn");
-        editBtn.textContent = "Edit";
+
         const delBtn = document.createElement("button");
         delBtn.classList.add("btn");
         delBtn.textContent = "Delete";
-        btnDiv.append(statusBtn, editBtn, delBtn);
+        btnDiv.append(statusBtn, delBtn);
 
         newDiv.append(dataDiv, btnDiv);
         bookDiv.appendChild(newDiv);
@@ -62,22 +60,30 @@ const dialog = document.querySelector("dialog");
 const openDialog = document.getElementById("addBtn");
 const closeDialog = document.getElementById("closeDialog");
 const submitBook = document.getElementById("submitBook");
+const form = document.querySelector("form");
 
 submitBook.addEventListener("click", (event) => {
     event.preventDefault();
-
+    
+    if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+    }
+    
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
-
+    
     let read = false;
     if(document.getElementById("readCheck").checked) {
         read = true;
         console.log("a")
     }
-
+    
     addBookToLibrary(title, author, pages, read);
     addBooksToDisplay();
+    
+    form.reset();
 })
 
 openDialog.addEventListener("click", () => {
@@ -87,6 +93,3 @@ openDialog.addEventListener("click", () => {
 closeDialog.addEventListener("click", () => {
     dialog.close();
 })
-addBookToLibrary("Hobbit", "Tolkien", "295", true);
-// addBookToLibrary("Bible", "God", "A lot");
-// addBooksToDisplay();
