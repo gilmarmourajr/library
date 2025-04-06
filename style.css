@@ -1,6 +1,6 @@
 :root {
     --background-color-main: black;
-    --background-color-body: gray;
+    --background-color-body: rgb(26, 26, 26);
     --background-color-secondary: blueviolet;
     --text-color-title: blueviolet;
     --text-color-main: white;
@@ -13,7 +13,11 @@
 }
 
 #header {
-    min-height: 15vh;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+
+    height: 12vh;
     text-align: center;
     padding: 1em 10%;
     font-size: 2em;
@@ -25,13 +29,16 @@
     justify-content: space-between;
 }
 
-.btn {
-    padding: 25px 20px;
-    border: none;
+#header .btn {
     color: var(--text-color-main);
     background-color: var(--background-color-secondary);
+    padding: 25px 20px;
+}
+
+.btn {
+    border: none;
     font-size: 0.5em;
-    border-radius: 10px;
+    border-radius: 30px;
     font-weight: 600;
     transition: 0.1s;
 }
@@ -40,7 +47,73 @@
     scale: 1.1;
 }
 
-#content {
-    background-color: gray;
-    min-height: 85vh;
+#body {
+    padding: 2em 10% 1em;
+    min-height: 88vh;
+    background-color: var(--background-color-body);
+    color: var(--text-color-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+#body h2 {
+    font-size: 2em;
+}
+
+#statistics {
+    display: flex;
+    gap: 30px;
+}
+
+#statistics h3 {
+    display: inline-block;
+    padding: 25px 20px;
+    background-color: var(--background-color-secondary);
+    border-radius: 10px;
+}
+
+#books {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px
+}
+
+.book {
+    min-height: 300px;
+    width: 18%;
+    padding: 30px;
+    font-size: 1.5em;
+    background-color: var(--background-color-secondary);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btns {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 10px;
+}
+
+.btns .btn {
+    display: inline-block;
+    height: 40px;
+    width: 47%;
+    font-size: 0.8em;
+}
+
+.btns .btn.status {
+    display: inline-block;
+    width: 100%;
 }
