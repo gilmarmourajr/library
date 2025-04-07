@@ -6,7 +6,7 @@ function Book(title, author, pages) {
   this.read = false;
 }
 
-Book.prototype.updateRead = function() {
+Book.prototype.updateReadStatus = function() {
   if(this.read === true) {
     this.read = false;
   } else {
@@ -114,24 +114,24 @@ function updateRead(event) {
   let updateId = event.target.parentNode.parentNode.dataset.id;
   for (book of bookArray) {
     if (book.id == updateId) {
-      book.updateRead();
+      book.updateReadStatus();
+      
+      //update book count
+      if (book.read) {
+        button.textContent = "Read";
+        readCount++;
+        unreadCount--;
+        break;
+      } else {
+        button.textContent = "Not read";
+        unreadCount++;
+        readCount--;
+        break;
+      }    
     }
-
-    //update book count
-    if (book.read) {
-      button.textContent = "Read";
-      readCount++;
-      unreadCount--;
-    } else {
-      button.textContent = "Not read";
-      unreadCount++;
-      readCount--;
-    }
-
-    updateStatus();
-
-    return;
   }
+
+  updateStatus();
 }
 
 function addPlaceholderDisplay() {
