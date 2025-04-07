@@ -6,6 +6,14 @@ function Book(title, author, pages) {
   this.read = false;
 }
 
+Book.prototype.updateRead = function() {
+  if(this.read === true) {
+    this.read = false;
+  } else {
+    this.read = true;
+  }
+}
+
 function addBookToLibrary(title, author, pages, read) {
   let book = new Book(title, author, pages);
   if (read) {
@@ -40,6 +48,7 @@ function addBooksToDisplay() {
 
     btnDiv.classList.add("btns");
     const statusBtn = document.createElement("button");
+    statusBtn.addEventListener("click", updateRead);
     statusBtn.classList.add("btn", "status");
     if (book.read) {
       statusBtn.textContent = "Read";
@@ -96,6 +105,33 @@ function removeElement(event) {
 
   // add placeholder if display is left empty
   if (!bookDiv.firstChild) addPlaceholderDisplay();
+}
+
+function updateRead(event) {
+  const button = event.currentTarget;
+
+  //locate book by id
+  let updateId = event.target.parentNode.parentNode.dataset.id;
+  for (book of bookArray) {
+    if (book.id == updateId) {
+      book.updateRead();
+    }
+
+    //update book count
+    if (book.read) {
+      button.textContent = "Read";
+      readCount++;
+      unreadCount--;
+    } else {
+      button.textContent = "Not read";
+      unreadCount++;
+      readCount--;
+    }
+
+    updateStatus();
+
+    return;
+  }
 }
 
 function addPlaceholderDisplay() {
