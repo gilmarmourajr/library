@@ -1,155 +1,227 @@
-function Book(title, author, pages) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.id = crypto.randomUUID();
-  this.read = false;
-}
+class Book {
+  id = crypto.randomUUID();
+  read = false;
 
-Book.prototype.updateReadStatus = function() {
-  if(this.read === true) {
-    this.read = false;
-  } else {
-    this.read = true;
+  constructor(title, author, pages) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
   }
-}
 
-function addBookToLibrary(title, author, pages, read) {
-  let book = new Book(title, author, pages);
-  if (read) {
-    book.read = true;
-    readCount++;
-  } else {
-    unreadCount++;
-  }
-  bookArray.push(book);
-}
-
-function addBooksToDisplay() {
-  clearDisplay();
-
-  // cycle through book objects in bookArray
-  for (let book of bookArray) {
-    const newDiv = document.createElement("div");
-    newDiv.classList.add("book");
-    // set unique id to html, to ease removal process
-    newDiv.setAttribute("data-id", book.id);
-
-    const dataDiv = document.createElement("div");
-    const pTitle = document.createElement("p");
-    pTitle.textContent = `Title: ${book.title}`;
-    const pAuthor = document.createElement("p");
-    pAuthor.textContent = `Author: ${book.author}`;
-    const pPages = document.createElement("p");
-    pPages.textContent = `Pages: ${book.pages}`;
-    dataDiv.append(pTitle, pAuthor, pPages);
-
-    const btnDiv = document.createElement("div");
-
-    btnDiv.classList.add("btns");
-    const statusBtn = document.createElement("button");
-    statusBtn.addEventListener("click", updateRead);
-    statusBtn.classList.add("btn", "status");
-    if (book.read) {
-      statusBtn.textContent = "Read";
+  updateReadStatus() {
+    if(this.read === true) {
+      this.read = false;
     } else {
-      statusBtn.textContent = "Not read";
-    }
-
-    const delBtn = document.createElement("button");
-    delBtn.classList.add("btn", "delete");
-    delBtn.textContent = "Delete";
-    delBtn.addEventListener("click", removeElement);
-
-    btnDiv.append(statusBtn, delBtn);
-
-    newDiv.append(dataDiv, btnDiv);
-    bookDiv.appendChild(newDiv);
-  }
-}
-
-function clearDisplay() {
-  bookDiv.textContent = "";
-}
-
-function updateStatus() {
-  document.getElementById(
-    "totalBooks"
-  ).textContent = `Total books: ${bookArray.length}`;
-  document.getElementById("read").textContent = `Read: ${readCount}`;
-  document.getElementById("unread").textContent = `Unread: ${unreadCount}`;
-}
-
-function removeElement(event) {
-  const button = event.currentTarget;
-
-  //locate book to be removed by its id
-  let removeId = event.target.parentNode.parentNode.dataset.id;
-  for (book in bookArray) {
-    if (bookArray[book].id == removeId) {
-      // update book count on delete
-      if (bookArray[book].read) {
-        readCount--;
-      } else {
-        unreadCount--;
-      }
-
-      bookArray.splice(book, 1);
-      updateStatus();
-      break;
+      this.read = true;
     }
   }
 
-  //remove book element
-  button.parentNode.parentNode.remove();
-
-  // add placeholder if display is left empty
-  if (!bookDiv.firstChild) addPlaceholderDisplay();
+  static addBookToLibrary(title, author, pages, read) {
+    let book = new Book(title, author, pages);
+    if (read) {
+      book.read = true;
+      display.readCount++;
+    } else {
+      display.unreadCount++;
+    }
+    display.bookArray.push(book);
+  }
 }
 
-function updateRead(event) {
-  const button = event.currentTarget;
+class Display {
+  readCount = 0;
+  unreadCount = 0;
+  bookArray = [];
+  bookDiv = document.getElementById("books");
 
-  //locate book by id
-  let updateId = event.target.parentNode.parentNode.dataset.id;
-  for (book of bookArray) {
-    if (book.id == updateId) {
-      book.updateReadStatus();
-      
-      //update book count
+  clearDisplay() {
+    this.bookDiv.textContent = "";
+  }
+
+  addBooksToDisplay() {
+    this.clearDisplay();
+  
+    // cycle through book objects in bookArray
+    for (let book of this.bookArray) {
+      const newDiv = document.createElement("div");
+      newDiv.classList.add("book");
+      // set unique id to html, to ease removal process
+      newDiv.setAttribute("data-id", book.id);
+  
+      const dataDiv = document.createElement("div");
+      const pTitle = document.createElement("p");
+      pTitle.textContent = `Title: ${book.title}`;
+      const pAuthor = document.createElement("p");
+      pAuthor.textContent = `Author: ${book.author}`;
+      const pPages = document.createElement("p");
+      pPages.textContent = `Pages: ${book.pages}`;
+      dataDiv.append(pTitle, pAuthor, pPages);
+  
+      const btnDiv = document.createElement("div");
+  
+      btnDiv.classList.add("btns");
+      const statusBtn = document.createElement("button");
+      statusBtn.addEventListener("click", this.updateRead);
+      statusBtn.classList.add("btn", "status");
       if (book.read) {
-        button.textContent = "Read";
-        readCount++;
-        unreadCount--;
-        break;
+        statusBtn.textContent = "Read";
       } else {
-        button.textContent = "Not read";
-        unreadCount++;
-        readCount--;
-        break;
-      }    
+        statusBtn.textContent = "Not read";
+      }
+  
+      const delBtn = document.createElement("button");
+      delBtn.classList.add("btn", "delete");
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", this.removeElement);
+  
+      btnDiv.append(statusBtn, delBtn);
+  
+      newDiv.append(dataDiv, btnDiv);
+      this.bookDiv.appendChild(newDiv);
     }
   }
 
-  updateStatus();
+  updateRead(event) {
+    const button = event.currentTarget;
+  
+    //locate book by id
+    let updateId = event.target.parentNode.parentNode.dataset.id;
+    for (book of this.bookArray) {
+      if (book.id == updateId) {
+        book.updateReadStatus();
+        
+        //update book count
+        if (book.read) {
+          button.textContent = "Read";
+          this.readCount++;
+          this.unreadCount--;
+          break;
+        } else {
+          button.textContent = "Not read";
+          this.unreadCount++;
+          this.readCount--;
+          break;
+        }    
+      }
+    }
+  
+    updateStatus();
+  }
+
+  removeElement(event) {
+    const button = event.currentTarget;
+  
+    //locate book to be removed by its id
+    let removeId = event.target.parentNode.parentNode.dataset.id;
+    for (book in this.bookArray) {
+      if (this.bookArray[book].id == removeId) {
+        // update book count on delete
+        if (this.bookArray[book].read) {
+          this.readCount--;
+        } else {
+          this.unreadCount--;
+        }
+  
+        this.bookArray.splice(book, 1);
+        updateStatus();
+        break;
+      }
+    }
+  
+    //remove book element
+    button.parentNode.parentNode.remove();
+  
+    // add placeholder if display is left empty
+    if (!bookDiv.firstChild) addPlaceholderDisplay();
+  }
+
+  updateStatus() {
+    document.getElementById(
+      "totalBooks"
+    ).textContent = `Total books: ${display.bookArray.length}`;
+    document.getElementById("read").textContent = `Read: ${this.readCount}`;
+    document.getElementById("unread").textContent = `Unread: ${this.unreadCount}`;
+  }
+
+  addPlaceholderDisplay() {
+    const text = document.createElement("h1");
+    text.textContent = "No books added!";
+    this.bookDiv.appendChild(text);
+  }
 }
 
-function addPlaceholderDisplay() {
-  const text = document.createElement("h1");
-  text.textContent = "No books added!";
-  bookDiv.appendChild(text);
-}
+// function removeElement(event) {
+//   const button = event.currentTarget;
 
-const bookArray = [];
-const bookDiv = document.getElementById("books");
+//   //locate book to be removed by its id
+//   let removeId = event.target.parentNode.parentNode.dataset.id;
+//   for (book in bookArray) {
+//     if (bookArray[book].id == removeId) {
+//       // update book count on delete
+//       if (bookArray[book].read) {
+//         readCount--;
+//       } else {
+//         unreadCount--;
+//       }
+
+//       bookArray.splice(book, 1);
+//       updateStatus();
+//       break;
+//     }
+//   }
+
+//   //remove book element
+//   button.parentNode.parentNode.remove();
+
+//   // add placeholder if display is left empty
+//   if (!bookDiv.firstChild) addPlaceholderDisplay();
+// }
+
+// function updateRead(event) {
+//   const button = event.currentTarget;
+
+//   //locate book by id
+//   let updateId = event.target.parentNode.parentNode.dataset.id;
+//   for (book of bookArray) {
+//     if (book.id == updateId) {
+//       book.updateReadStatus();
+      
+//       //update book count
+//       if (book.read) {
+//         button.textContent = "Read";
+//         readCount++;
+//         unreadCount--;
+//         break;
+//       } else {
+//         button.textContent = "Not read";
+//         unreadCount++;
+//         readCount--;
+//         break;
+//       }    
+//     }
+//   }
+
+//   updateStatus();
+// }
+
+// function addPlaceholderDisplay() {
+//   const text = document.createElement("h1");
+//   text.textContent = "No books added!";
+//   bookDiv.appendChild(text);
+// }
+
+// const bookArray = [];
+// const bookDiv = document.getElementById("books");
 const dialog = document.querySelector("dialog");
 const openDialog = document.getElementById("addBtn");
 const closeDialog = document.getElementById("closeDialog");
 const submitBook = document.getElementById("submitBook");
 const form = document.querySelector("form");
 
-let readCount = 0;
-let unreadCount = 0;
+// let readCount = 0;
+// let unreadCount = 0;
+
+const display = new Display();
 
 submitBook.addEventListener("click", (event) => {
   event.preventDefault();
@@ -170,9 +242,9 @@ submitBook.addEventListener("click", (event) => {
     console.log("a");
   }
 
-  addBookToLibrary(title, author, pages, read);
-  addBooksToDisplay();
-  updateStatus();
+  Book.addBookToLibrary(title, author, pages, read);
+  display.addBooksToDisplay();
+  display.updateStatus();
 
   form.reset();
 });
