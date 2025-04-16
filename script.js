@@ -9,14 +9,10 @@ class Book {
   }
 
   updateReadStatus() {
-    if(this.read === true) {
-      this.read = false;
-    } else {
-      this.read = true;
-    }
+    this.read = !this.read;
   }
 
-  static addBookToLibrary(title, author, pages, read) {
+  static addBookToLibrary(title, author, pages, read, display) {
     let book = new Book(title, author, pages);
     if (read) {
       book.read = true;
@@ -176,7 +172,7 @@ submitBook.addEventListener("click", (event) => {
     read = true;
   }
 
-  Book.addBookToLibrary(title, author, pages, read);
+  Book.addBookToLibrary(title, author, pages, read, display);
   display.addBooksToDisplay();
   display.updateStatus();
 
