@@ -81,12 +81,12 @@ class Display {
     }
   }
 
-  updateRead(event) {
+  updateRead = (event) => {
     const button = event.currentTarget;
   
     //locate book by id
     let updateId = event.target.parentNode.parentNode.dataset.id;
-    for (book of this.bookArray) {
+    for (let book of this.bookArray) {
       if (book.id == updateId) {
         book.updateReadStatus();
         
@@ -105,15 +105,15 @@ class Display {
       }
     }
   
-    updateStatus();
+    this.updateStatus();
   }
 
-  removeElement(event) {
+  removeElement = (event) => {
     const button = event.currentTarget;
   
     //locate book to be removed by its id
     let removeId = event.target.parentNode.parentNode.dataset.id;
-    for (book in this.bookArray) {
+    for (let book in this.bookArray) {
       if (this.bookArray[book].id == removeId) {
         // update book count on delete
         if (this.bookArray[book].read) {
@@ -123,7 +123,7 @@ class Display {
         }
   
         this.bookArray.splice(book, 1);
-        updateStatus();
+        this.updateStatus();
         break;
       }
     }
@@ -132,7 +132,7 @@ class Display {
     button.parentNode.parentNode.remove();
   
     // add placeholder if display is left empty
-    if (!bookDiv.firstChild) addPlaceholderDisplay();
+    if (!display.bookDiv.firstChild) this.addPlaceholderDisplay();
   }
 
   updateStatus() {
@@ -150,76 +150,11 @@ class Display {
   }
 }
 
-// function removeElement(event) {
-//   const button = event.currentTarget;
-
-//   //locate book to be removed by its id
-//   let removeId = event.target.parentNode.parentNode.dataset.id;
-//   for (book in bookArray) {
-//     if (bookArray[book].id == removeId) {
-//       // update book count on delete
-//       if (bookArray[book].read) {
-//         readCount--;
-//       } else {
-//         unreadCount--;
-//       }
-
-//       bookArray.splice(book, 1);
-//       updateStatus();
-//       break;
-//     }
-//   }
-
-//   //remove book element
-//   button.parentNode.parentNode.remove();
-
-//   // add placeholder if display is left empty
-//   if (!bookDiv.firstChild) addPlaceholderDisplay();
-// }
-
-// function updateRead(event) {
-//   const button = event.currentTarget;
-
-//   //locate book by id
-//   let updateId = event.target.parentNode.parentNode.dataset.id;
-//   for (book of bookArray) {
-//     if (book.id == updateId) {
-//       book.updateReadStatus();
-      
-//       //update book count
-//       if (book.read) {
-//         button.textContent = "Read";
-//         readCount++;
-//         unreadCount--;
-//         break;
-//       } else {
-//         button.textContent = "Not read";
-//         unreadCount++;
-//         readCount--;
-//         break;
-//       }    
-//     }
-//   }
-
-//   updateStatus();
-// }
-
-// function addPlaceholderDisplay() {
-//   const text = document.createElement("h1");
-//   text.textContent = "No books added!";
-//   bookDiv.appendChild(text);
-// }
-
-// const bookArray = [];
-// const bookDiv = document.getElementById("books");
 const dialog = document.querySelector("dialog");
 const openDialog = document.getElementById("addBtn");
 const closeDialog = document.getElementById("closeDialog");
 const submitBook = document.getElementById("submitBook");
 const form = document.querySelector("form");
-
-// let readCount = 0;
-// let unreadCount = 0;
 
 const display = new Display();
 
@@ -239,7 +174,6 @@ submitBook.addEventListener("click", (event) => {
   let read = false;
   if (document.getElementById("readCheck").checked) {
     read = true;
-    console.log("a");
   }
 
   Book.addBookToLibrary(title, author, pages, read);
